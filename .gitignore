@@ -1,0 +1,16 @@
+# Variables de entorno - NUNCA subir al repo
+.env
+
+# macOS
+.DS_Store
+
+# IntelliJ / VS Code
+.idea/
+.vscode/
+*.iml
+
+# Targets de compilación
+target/
+
+# Logs
+*.log

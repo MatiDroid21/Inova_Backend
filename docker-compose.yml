@@ -1,0 +1,81 @@
+# docker-compose.yml — Innovatech Backend Stack
+# Levanta: MySQL + API Ventas (8080) + API Despachos (8081)
+# Uso: cp .env.example .env → editar valores → docker compose up --build
+
+services:
+
+  # ─── BASE DE DATOS MySQL ─────────────────────────────────────
+  db:
+    image: mysql:8.0
+    container_name: innovatech_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - backend_net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # ─── BACKEND VENTAS (puerto 8080) ────────────────────────────
+  api-ventas:
+    build:
+      context: ./back-Ventas_SpringBoot/Springboot-API-REST
+      dockerfile: Dockerfile
+    container_name: innovatech_ventas
+    restart: unless-stopped
+    environment:
+      DB_ENDPOINT: db
+      DB_PORT: 3306
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - backend_net
+
+  # ─── BACKEND DESPACHOS (puerto 8081) ─────────────────────────
+  api-despachos:
+    build:
+      context: ./back-Despachos_SpringBoot/Springboot-API-REST-DESPACHO
+      dockerfile: Dockerfile
+    container_name: innovatech_despachos
+    restart: unless-stopped
+    environment:
+      DB_ENDPOINT: db
+      DB_PORT: 3306
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "8081:8081"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - backend_net
+
+# ─── VOLÚMENES ───────────────────────────────────────────────
+volumes:
+  mysql_data:
+    name: innovatech_mysql_data
+
+# ─── REDES ───────────────────────────────────────────────────
+networks:
+  backend_net:
+    name: innovatech_backend_net
+    driver: bridge
