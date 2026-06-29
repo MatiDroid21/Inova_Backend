@@ -22,6 +22,18 @@ spec:
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "prod"
+        - name: DB_ENDPOINT
+          value: "mysql-service"
+        - name: DB_PORT
+          value: "3306"
+        - name: DB_NAME
+          value: "innovatech"
+        - name: DB_USERNAME
+          value: "root"
+        - name: DB_PASSWORD
+          value: "root1234"
+        - name: SPRING_DATASOURCE_URL
+          value: "jdbc:mysql://mysql-service:3306/innovatech?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&createDatabaseIfNotExist=true"
         resources:
           requests:
             cpu: "250m"
@@ -33,11 +45,11 @@ spec:
           httpGet:
             path: /actuator/health
             port: 8080
-          initialDelaySeconds: 30
+          initialDelaySeconds: 120
           periodSeconds: 10
         livenessProbe:
           httpGet:
             path: /actuator/health
             port: 8080
-          initialDelaySeconds: 60
+          initialDelaySeconds: 180
           periodSeconds: 15
