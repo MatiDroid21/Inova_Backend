@@ -35,7 +35,7 @@ jobs:
           context: ./back-Ventas_SpringBoot/Springboot-API-REST
           dockerfile: ./back-Ventas_SpringBoot/Springboot-API-REST/Dockerfile
           push: true
-          tags: ${{ secrets.ECR_REGISTRY }}/inovatech-backend:ventas-latest
+          tags: ${{ secrets.ECR_REGISTRY }}/inova-ventas:latest
 
   # ─────────────────────────────────────────────
   # JOB 2: Build y Push — API Despachos
@@ -65,7 +65,7 @@ jobs:
           context: ./back-Despachos_SpringBoot/Springboot-API-REST-DESPACHO
           dockerfile: ./back-Despachos_SpringBoot/Springboot-API-REST-DESPACHO/Dockerfile
           push: true
-          tags: ${{ secrets.ECR_REGISTRY }}/inovatech-backend:despachos-latest
+          tags: ${{ secrets.ECR_REGISTRY }}/inova-despachos:latest
 
   # ─────────────────────────────────────────────
   # JOB 3: Deploy en EKS
