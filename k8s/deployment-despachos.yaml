@@ -2,10 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: despachos-deployment
-  labels:
-    app: despachos
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: despachos
@@ -18,26 +16,36 @@ spec:
       - name: despachos
         image: 784985602395.dkr.ecr.us-east-1.amazonaws.com/inova-despachos:latest
         ports:
-        - containerPort: 8080
+        - containerPort: 8081
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "prod"
+        - name: DB_ENDPOINT
+          value: "mysql-service"
+        - name: DB_PORT
+          value: "3306"
+        - name: DB_NAME
+          value: "innovatech"
+        - name: DB_USERNAME
+          value: "root"
+        - name: DB_PASSWORD
+          value: "root1234"
         resources:
           requests:
-            cpu: "250m"
-            memory: "512Mi"
+            cpu: 250m
+            memory: 512Mi
           limits:
-            cpu: "500m"
-            memory: "1Gi"
+            cpu: 500m
+            memory: 1Gi
         readinessProbe:
           httpGet:
             path: /actuator/health
-            port: 8080
-          initialDelaySeconds: 120
+            port: 8081
+          initialDelaySeconds: 30
           periodSeconds: 10
         livenessProbe:
           httpGet:
             path: /actuator/health
-            port: 8080
-          initialDelaySeconds: 180
+            port: 8081
+          initialDelaySeconds: 90
           periodSeconds: 15

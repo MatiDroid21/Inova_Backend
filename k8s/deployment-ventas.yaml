@@ -2,10 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ventas-deployment
-  labels:
-    app: ventas
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: ventas
@@ -32,24 +30,22 @@ spec:
           value: "root"
         - name: DB_PASSWORD
           value: "root1234"
-        - name: SPRING_DATASOURCE_URL
-          value: "jdbc:mysql://mysql-service:3306/innovatech?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&createDatabaseIfNotExist=true"
         resources:
           requests:
-            cpu: "250m"
-            memory: "512Mi"
+            cpu: 250m
+            memory: 512Mi
           limits:
-            cpu: "500m"
-            memory: "1Gi"
+            cpu: 500m
+            memory: 1Gi
         readinessProbe:
           httpGet:
             path: /actuator/health
             port: 8080
-          initialDelaySeconds: 120
+          initialDelaySeconds: 30
           periodSeconds: 10
         livenessProbe:
           httpGet:
             path: /actuator/health
             port: 8080
-          initialDelaySeconds: 180
+          initialDelaySeconds: 90
           periodSeconds: 15
