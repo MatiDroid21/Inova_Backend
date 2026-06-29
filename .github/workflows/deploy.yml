@@ -91,11 +91,8 @@ jobs:
         run: |
           aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
 
-      - name: Rollout restart Ventas
-        run: kubectl rollout restart deployment/ventas-deployment
-
-      - name: Rollout restart Despachos
-        run: kubectl rollout restart deployment/despachos-deployment
+      - name: Aplicar manifiestos k8s
+        run: kubectl apply -f k8s/
 
       - name: Verificar estado del despliegue
         run: |
