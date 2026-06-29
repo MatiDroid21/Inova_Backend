@@ -1,4 +1,4 @@
-# Innovatech Chile — Backend
+# Innovatech Chile —-- Backend
 
 API REST del sistema de gestión de Innovatech Chile, compuesta por
 dos microservicios independientes desarrollados con **Spring Boot**,
