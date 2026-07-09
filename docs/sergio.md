@@ -10,3 +10,10 @@ Durante el proceso, el mayor desafío fue testear repetidamente la red interna p
 
 ## Decisiones técnicas tomadas
 Una de las decisiones más importantes en mi área fue estandarizar el uso de imágenes base oficiales y ligeras para asegurar la compatibilidad de todas las dependencias del backend y frontend. Además, en conjunto con el equipo de despliegue, decidimos centralizar la gestión de variables de entorno y Secrets de manera que la arquitectura de microservicios backend quedara interna y protegida dentro del clúster, dejando expuesto únicamente el frontend público para garantizar la seguridad del sistema.
+
+## Aprendizaje Personal
+Este proyecto me demostró el valor real de la cultura DevOps en el software moderno. Mi mayor aprendizaje fue entender que el trabajo del desarrollador no termina cuando el código compila en local; asegurar la portabilidad mediante contenedores es un paso crítico para el éxito del despliegue. Además, la experiencia de trabajar codo a codo en la transición a la nube me enseñó a abordar los problemas de conectividad y redes desde una perspectiva sistémica, mejorando mi capacidad para diagnosticar errores de comunicación entre componentes distribuidos y fortaleciendo mi habilidad para trabajar en equipo bajo metodologías ágiles de integración continua.
+
+## Aspectos Técnicos Que Domino
+Contenedorización y Orquestación Local: Creación y configuración de archivos Dockerfile eficientes para empaquetar aplicaciones, aislamiento de entornos y gestión de multi-contenedores mediante Docker Compose.
+Redes y Conectividad en Docker, Configuración de redes virtuales internas, mapeo y redirección de puertos para permitir la comunicación segura entre microservicios backend y el frontend.
